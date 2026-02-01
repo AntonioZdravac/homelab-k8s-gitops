@@ -9,7 +9,7 @@ spec:
       repoURL: https://github.com/AntonioZdravac/homelab-k8s-gitops
       revision: main
       directories:
-      - path: apps/*
+      - path: apps/*/*
   template:
     metadata:
       name: '{{path.basename}}'
