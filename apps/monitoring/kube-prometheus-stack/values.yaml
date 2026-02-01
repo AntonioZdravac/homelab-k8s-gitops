@@ -1,0 +1,60 @@
+# ==========================================
+# Global
+# ==========================================
+global:
+  rbac:
+    create: true
+
+# ==========================================
+# Prometheus
+# ==========================================
+prometheus:
+  enabled: true
+  prometheusSpec:
+    replicas: 1
+
+    retention: 7d
+
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 10Gi
+
+# ==========================================
+# Alertmanager
+# ==========================================
+alertmanager:
+  enabled: true
+  alertmanagerSpec:
+    replicas: 1
+
+    storage:
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 2Gi
+
+# ==========================================
+# Grafana
+# ==========================================
+grafana:
+  enabled: true
+  persistence:
+    enabled: false  # enable this after installation of storage provisioner, i.e. Longhorn
+    type: pvc
+    accessModes:
+      - ReadWriteOnce
+    size: 5Gi
+
+  service:
+    type: ClusterIP
+
+  defaultDashboardsEnabled: true
+
