@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/vmware-tanzu/velero'
+    repoURL: 'https://github.com/vmware-tanzu'
     chart: velero
     targetRevision: 11.3.2
     helm:
