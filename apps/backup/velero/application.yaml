@@ -5,13 +5,16 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  source:
-    repoURL: 'https://vmware-tanzu.github.io/helm-charts'
+  sources:
+  - repoURL: 'https://vmware-tanzu.github.io/helm-charts'
     chart: velero
     targetRevision: 11.3.2
     helm:
       valueFiles:
-        - values.yaml
+        - $values/apps/backup/velero/values.yaml
+  - repoURL: https://github.com/AntonioZdravac/homelab-k8s-gitops
+    targetRevision: main
+    ref: values
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: caas-velero
