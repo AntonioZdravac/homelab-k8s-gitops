@@ -1,0 +1,11 @@
+USER-SUPPLIED VALUES:
+hubble:
+  enabled: true
+  relay:
+    enabled: true
+  ui:
+    enabled: true
+kubeProxyReplacement: true
+kubeProxyReplacementStrict: false
+operator:
+  replicas: 1

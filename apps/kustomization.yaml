@@ -4,4 +4,5 @@ kind: Kustomization
 resources:
   - backup/velero/application.yaml
   - monitoring/kube-prometheus-stack/application.yaml
+  - cilium_infrastructure/cilium/application.yaml
 
