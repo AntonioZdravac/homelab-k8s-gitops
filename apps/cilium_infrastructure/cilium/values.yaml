@@ -1,4 +1,4 @@
-hubble:
+gubble:
   enabled: true
   relay:
     enabled: true
@@ -8,3 +8,76 @@ kubeProxyReplacement: true
 kubeProxyReplacementStrict: false
 operator:
   replicas: 1
+
+ingressController:
+  # -- Enable cilium ingress controller
+  # This will automatically set enable-envoy-config as well.
+  enabled: true
+  # -- Set cilium ingress controller to be the default ingress controller
+  # This will let cilium ingress controller route entries without ingress class set
+  default: true
+  # -- Default ingress load balancer mode
+  # Supported values: shared, dedicated
+  # For granular control, use the following annotations on the ingress resource:
+  # "ingress.cilium.io/loadbalancer-mode: dedicated" (or "shared").
+  loadbalancerMode: dedicated
+  # -- Enforce https for host having matching TLS host in Ingress.
+  # Incoming traffic to http listener will return 308 http error code with respective location in header.
+  enforceHttps: true
+  # -- Enable proxy protocol for all Ingress listeners. Note that _only_ Proxy protocol traffic will be accepted once this is enabled.
+  enableProxyProtocol: false
+  # -- IngressLBAnnotations are the annotation and label prefixes, which are used to filter annotations and/or labels to propagate from Ingress to the Load Balancer service
+  ingressLBAnnotationPrefixes: ['lbipam.cilium.io', 'nodeipam.cilium.io', 'service.beta.kubernetes.io', 'service.kubernetes.io', 'cloud.google.com']
+  # -- Default secret namespace for ingresses without .spec.tls[].secretName set.
+  defaultSecretNamespace: kube-system
+  # -- Default secret name for ingresses without .spec.tls[].secretName set.
+  defaultSecretName: default-secret-cilium
+  # -- SecretsNamespace is the namespace in which envoy SDS will retrieve TLS secrets from.
+  secretsNamespace:
+    # -- Create secrets namespace for Ingress.
+    create: true
+    # -- Name of Ingress secret namespace.
+    name: cilium-secrets
+    # -- Enable secret sync, which will make sure all TLS secrets used by Ingress are synced to secretsNamespace.name.
+    # If disabled, TLS secrets must be maintained externally.
+    sync: true
+  # -- Load-balancer service in shared mode.
+  # This is a single load-balancer service for all Ingress resources.
+  service:
+    # -- Service name
+    name: cilium-ingress
+    # -- Labels to be added for the shared LB service
+    labels: {}
+    # -- Annotations to be added for the shared LB service
+    annotations: {}
+    # -- Service type for the shared LB service
+    type: LoadBalancer
+    # -- Configure a specific nodePort for insecure HTTP traffic on the shared LB service
+    insecureNodePort: 30666
+    # -- Configure a specific nodePort for secure HTTPS traffic on the shared LB service
+    secureNodePort: 30111
+    # -- Configure a specific loadBalancerClass on the shared LB service (requires Kubernetes 1.24+)
+    loadBalancerClass: ~
+    # -- Configure a specific loadBalancerIP on the shared LB service
+    loadBalancerIP: ~
+    # -- Configure if node port allocation is required for LB service
+    # ref: https://kubernetes.io/docs/concepts/services-networking/service/#load-balancer-nodeport-allocation
+    allocateLoadBalancerNodePorts: ~
+    # -- Control how traffic from external sources is routed to the LoadBalancer Kubernetes Service for Cilium Ingress in shared mode.
+    # Valid values are "Cluster" and "Local".
+    # ref: https://kubernetes.io/docs/reference/networking/virtual-ips/#external-traffic-policy
+    externalTrafficPolicy: Cluster
+  # Host Network related configuration
+  hostNetwork:
+    # -- Configure whether the Envoy listeners should be exposed on the host network.
+    enabled: false
+    # -- Configure a specific port on the host network that gets used for the shared listener.
+    sharedListenerPort: 8080
+    # Specify the nodes where the Ingress listeners should be exposed
+    nodes:
+      # -- Specify the labels of the nodes where the Ingress listeners should be exposed
+      #
+      # matchLabels:
+      #   kubernetes.io/os: linux
+      #   kubernetes.io/hostname: kind-worker
+      matchLabels: {}
