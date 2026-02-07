@@ -54,7 +54,7 @@ ingressController:
     # -- Annotations to be added for the shared LB service
     annotations: {}
     # -- Service type for the shared LB service
-    type: LoadBalancer
+    type: NodePort
     # -- Configure a specific nodePort for insecure HTTP traffic on the shared LB service
     insecureNodePort: 30666
     # -- Configure a specific nodePort for secure HTTPS traffic on the shared LB service
