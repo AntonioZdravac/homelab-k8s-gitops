@@ -5,4 +5,7 @@ resources:
   - backup/velero/application.yaml
   - monitoring/kube-prometheus-stack/application.yaml
   - cilium_infrastructure/cilium/application.yaml
+  - test-pod/testing_cilium_ingress_controller/deployment.yaml
+  - test-pod/testing_cilium_ingress_controller/service.yaml
+  - test-pod/testing_cilium_ingress_controller/ingress.yaml
 
