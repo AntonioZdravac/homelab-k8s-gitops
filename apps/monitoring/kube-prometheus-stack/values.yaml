@@ -46,13 +46,10 @@ alertmanager:
 # ==========================================
 grafana:
   enabled: true
-  persistence:
-    enabled: false  # enable this after installation of storage provisioner, i.e. Longhorn
-    type: pvc
-    accessModes:
-      - ReadWriteOnce
-    size: 5Gi
-
+  ingress:
+    enabled: true
+    hosts:
+    - grafana-antonio.homelab.com
   service:
     type: ClusterIP
 
