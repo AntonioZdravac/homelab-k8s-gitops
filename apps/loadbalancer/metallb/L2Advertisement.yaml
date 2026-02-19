@@ -1,0 +1,9 @@
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: homelab-antonio-l2
+  namespace: metallb
+spec:
+  ipAddressPools:
+    - homelab-pool
+
