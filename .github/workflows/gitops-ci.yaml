@@ -1,0 +1,56 @@
+name: GitOps CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # -------------------------
+      # Install tools
+      # -------------------------
+      - name: Install yamllint
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y yamllint
+
+      - name: Install kubeconform
+        run: |
+          curl -sSL https://github.com/yannh/kubeconform/releases/latest/download/kubeconform-linux-amd64.tar.gz | tar xz
+          sudo mv kubeconform /usr/local/bin/
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+
+      # -------------------------
+      # YAML lint
+      # -------------------------
+      - name: YAML Lint
+        run: yamllint .
+
+      # -------------------------
+      # Kubernetes schema validation
+      # -------------------------
+      - name: Validate Kubernetes manifests
+        run: |
+          find . -name "*.yaml" -print0 | \
+          xargs -0 kubeconform -strict -ignore-missing-schemas
+
+      # -------------------------
+      # Helm lint (values.yaml)
+      # -------------------------
+      - name: Helm lint charts
+        run: |
+          helm lint apps/backup/velero || true
+          helm lint apps/cilium_infrastructure/cilium || true
+          helm lint apps/loadbalancer/metallb || true
+          helm lint apps/monitoring/kube-prometheus-stack || true
+          helm lint apps/monitoring/loki || true
