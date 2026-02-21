@@ -14,7 +14,7 @@ image:
 
 # Resource requests/limits to specify for the Velero deployment.
 
-resources: {}
+resources:
   requests:
     cpu: 200m
     memory: 128Mi
