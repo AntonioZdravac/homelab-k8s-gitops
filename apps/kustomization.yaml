@@ -10,6 +10,7 @@ resources:
   - loadbalancer/metallb/application.yaml
   - loadbalancer/metallb/IPAddressPool.yaml
   - loadbalancer/metallb/L2Advertisement.yaml
+  - storage/local-path/deploy_local_path.yaml
   - test-pod/testing_cilium_ingress_controller/deployment.yaml
   - test-pod/testing_cilium_ingress_controller/service.yaml
   - test-pod/testing_cilium_ingress_controller/ingress.yaml

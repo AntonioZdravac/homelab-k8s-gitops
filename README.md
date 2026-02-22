@@ -89,6 +89,14 @@ All deployed and managed via GitOps.
 
 ---
 
+## Storage
+
+Local-path-provisoner is installed with:
+
+https://raw.githubusercontent.com/rancher/local-path-provisioner/master/deploy/local-path-storage.yaml
+
+---
+
 ## Backup Strategy
 
 Velero is deployed for:
