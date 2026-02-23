@@ -7,7 +7,6 @@ metadata:
     grafana_dashboard: "1"
   annotations:
     argocd.argoproj.io/tracking-id: general-dashboards:/ConfigMap:monitoring/general-dashboards
-    k8s-sidecar-target-directory: AntonioDashboards
 data:
   cpu-timeseries.json: |
     {
