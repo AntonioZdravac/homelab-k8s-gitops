@@ -1,0 +1,152 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: general-dashboards
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1"
+  annotations:
+    argocd.argoproj.io/tracking-id: general-dashboards:/ConfigMap:monitoring/general-dashboards
+    k8s-sidecar-target-directory: AntonioDashboards
+data:
+  cpu-timeseries.json: |
+    {
+      "id": null,
+      "uid": "cpu-timeseries",
+      "title": "CPU Usage Timeseries",
+      "schemaVersion": 36,
+      "version": 1,
+      "panels": [
+        {
+          "type": "timeseries",
+          "title": "CPU Usage",
+          "gridPos": { "x": 0, "y": 0, "w": 24, "h": 9 },
+          "targets": [
+            { "expr": "node_cpu_seconds_total" }
+          ]
+        }
+      ]
+    }
+
+  memory-gauge.json: |
+    {
+      "id": null,
+      "uid": "memory-gauge",
+      "title": "Memory Gauge",
+      "schemaVersion": 36,
+      "version": 1,
+      "panels": [
+        {
+          "type": "gauge",
+          "title": "Consumed Memory",
+          "gridPos": { "x": 0, "y": 0, "w": 12, "h": 9 },
+          "targets": [
+            { "expr": "node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes" }
+          ],
+          "fieldConfig": {
+            "defaults": { 
+              "thresholds": {
+                "mode": "percentage",
+                "steps": [
+                  {
+                    "value": null,
+                    "color": "green"
+                  },
+                  {
+                    "value": 50,
+                    "color": "yellow"
+                  },
+                  {
+                    "value": 90,
+                    "color": "red"
+                  }
+                ]
+              },
+              "unit": "bytes",
+              "min": 0,
+              "max": 8206307328
+            }
+          }
+        },
+
+        {
+          "type": "gauge",
+          "title": "Available Memory",
+          "gridPos": { "x": 12, "y": 0, "w": 12, "h": 9 },
+          "targets": [
+            { "expr": "node_memory_MemAvailable_bytes" }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "thresholds": {
+                "mode": "percentage",
+                "steps": [
+                  {
+                    "value": null,
+                    "color": "red"
+                  },
+                  {
+                    "value": 10,
+                    "color": "yellow"
+                  },
+                  {
+                    "value": 50,
+                    "color": "green"
+                  }
+                ]
+              },
+              "unit": "bytes",
+              "min": 0,
+              "max": 8206307328
+            }
+          }
+        }
+      ]
+    }
+
+  disk-stat.json: |
+    {
+      "id": null,
+      "uid": "disk-stat",
+      "title": "Disk Usage Stat",
+      "schemaVersion": 36,
+      "version": 1,
+      "panels": [
+        {
+          "type": "stat",
+          "title": "Disk Available",
+          "gridPos": { "x": 12, "y": 0, "w": 12, "h": 9 },
+          "targets": [
+            { "expr": "node_filesystem_avail_bytes" }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "bytes"
+            }
+          }
+        }
+      ]
+    }
+
+  pod-table.json: |
+    {
+      "id": null,
+      "uid": "pod-table",
+      "title": "Pods Table",
+      "schemaVersion": 36,
+      "version": 1,
+      "panels": [
+        {
+          "type": "table",
+          "title": "Pods Status",
+          "gridPos": { "x": 0, "y": 9, "w": 24, "h": 9 },
+          "targets": [
+            { "expr": "kube_pod_info" }
+          ],
+          "options": {
+            "showHeader": true
+          }
+        }
+      ]
+    }
+
