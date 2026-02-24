@@ -21,7 +21,12 @@ data:
           "title": "CPU Usage",
           "gridPos": { "x": 0, "y": 0, "w": 24, "h": 9 },
           "targets": [
-            { "expr": "node_cpu_seconds_total" }
+            { "expr": "node_cpu_seconds_total" ,
+              "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+              }
+            }
           ]
         }
       ]
