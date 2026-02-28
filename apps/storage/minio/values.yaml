@@ -1,0 +1,26 @@
+mode: standalone
+
+replicas: 1
+
+persistence:
+  enabled: true
+  size: 15Gi
+  storageClass: local-path
+
+resources:
+  requests:
+    memory: 1Gi
+
+rootUser: minioadmin
+rootPassword: toniboni910
+
+ingress:
+  enabled: true
+  hosts:
+  - minio-antonio.homelab.com
+
+networkPolicy:
+  enabled: true
+  # Specifies whether the policies created will be standard Network Policies (flavor: kubernetes)
+  # or Cilium Network Policies (flavor: cilium)
+  flavor: cilium

@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: minio
+  namespace: argocd
+spec:
+  project: default
+  sources:
+  - repoURL: 'https://charts.min.io/'
+    chart: minio
+    targetRevision: 5.4.0
+    helm:
+      valueFiles:
+        - $values/apps/storage/minio/values.yaml
+  - repoURL: https://github.com/AntonioZdravac/homelab-k8s-gitops
+    targetRevision: main
+    ref: values
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: minio
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
