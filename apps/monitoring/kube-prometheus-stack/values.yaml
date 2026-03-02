@@ -19,6 +19,10 @@ crds:
 # ==========================================
 prometheus:
   enabled: true
+  ingress:
+    enabled: true
+    hosts:
+    - prometheus-antonio.homelab.com
   prometheusSpec:
     replicas: 1
 
