@@ -27,7 +27,7 @@ prometheus:
     port: 80
   prometheusSpec:
     replicas: 1
-
+    portName: "http"
     retention: 7d
 
     storageSpec:
