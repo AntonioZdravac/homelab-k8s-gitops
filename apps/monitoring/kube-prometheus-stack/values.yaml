@@ -23,7 +23,8 @@ prometheus:
     enabled: true
     hosts:
     - prometheus-antonio.homelab.com
-    servicePort: 9090
+  service:
+    port: 80
   prometheusSpec:
     replicas: 1
 
