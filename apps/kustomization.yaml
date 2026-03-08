@@ -6,6 +6,7 @@ resources:
   - monitoring/kube-prometheus-stack/application.yaml
   - monitoring/grafana-dashboards/application.yaml
   - monitoring/loki/application.yaml
+  - monitoring/opentelemetry/application.yaml
   - monitoring/crds/application.yaml
   - cilium_infrastructure/cilium/application.yaml
   - loadbalancer/metallb/application.yaml

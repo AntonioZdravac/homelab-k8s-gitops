@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: open-telemetry
+  namespace: argocd
+spec:
+  project: default
+  sources:
+  - repoURL: 'https://open-telemetry.github.io/opentelemetry-helm-charts'
+    chart: opentelemetry-collector
+    targetRevision: 0.146.1
+    helm:
+      valueFiles:
+        - $values/apps/monitoring/open-telemetry/values.yaml
+  - repoURL: https://github.com/AntonioZdravac/homelab-k8s-gitops
+    targetRevision: main
+    ref: values
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: monitoring
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
