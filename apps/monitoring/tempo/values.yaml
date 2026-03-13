@@ -1,0 +1,54 @@
+replicas: 1
+
+tempo:
+  repository: grafana/tempo
+  pullPolicy: IfNotPresent
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+  memBallastSizeMbs: 256
+  multitenancyEnabled: false
+  reportingEnabled: false
+
+  retention: 24h
+
+  server:
+    http_listen_port: 3200
+
+  storage:
+    trace:
+      backend: local
+      local:
+        path: /var/tempo/traces
+      wal:
+        path: /var/tempo/wal
+
+  receivers:
+    otlp:
+      protocols:
+        grpc:
+          endpoint: "0.0.0.0:4317"
+        http:
+          endpoint: "0.0.0.0:4318"
+
+persistence:
+  enabled: true
+  size: 10Gi
+  accessModes:
+    - ReadWriteOnce
+
+service:
+  type: ClusterIP
+
+serviceMonitor:
+  enabled: true
+  interval: 30s
+
+tempoQuery:
+  enabled: false

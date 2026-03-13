@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tempo
+  namespace: argocd
+spec:
+  project: default
+  sources:
+  - repoURL: 'https://grafana-community.github.io/helm-charts'
+    chart: tempo
+    targetRevision: 2.0.0
+    helm:
+      valueFiles:
+        - $values/apps/monitoring/tempo/values.yaml
+  - repoURL: https://github.com/AntonioZdravac/homelab-k8s-gitops
+    targetRevision: main
+    ref: values
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: monitoring
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
